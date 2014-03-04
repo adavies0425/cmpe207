@@ -19,3 +19,6 @@
 
 # Mac files
 *.DS_Store
+
+# Java objects
+*.class
