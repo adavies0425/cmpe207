@@ -14,6 +14,9 @@ public class EchoServer
 {
 	public static final int SERVER_PORT = 8888;
 	public static final String QUIT_COMMAND = "QUIT";
+	public static final int THREAD_PRIORITY_LOW = 0;
+	public static final int THREAD_PRIORITY_MEDIUM = 1;
+	public static final int THREAD_PRIORITY_HIGH = 2;
 	
 	private static EchoServer instance = null;
 	private ServerSocket socket = null;
@@ -60,15 +63,58 @@ public class EchoServer
 	{
 		EchoServer server = null;
 		boolean doThread = true;
-		if(args != null && args.length >= 1)
+		int priority = Thread.NORM_PRIORITY;
+		if(args != null && args.length > 0)
 		{
+			// get thread/runnable preference
 			doThread = !(args[0].equalsIgnoreCase("runnable"));
+			
+			// check if priority is specified
+			if(args.length > 1)
+			{
+				try
+				{
+					int userPriority = Integer.parseInt(args[1]);
+					switch(userPriority)
+					{
+						case THREAD_PRIORITY_LOW:
+							System.out.println("User specified MIN thread priority!");
+							priority = Thread.MIN_PRIORITY;
+							break;
+							
+						case THREAD_PRIORITY_HIGH:
+							System.out.println("User specified MAX thread priority!");
+							priority = Thread.MAX_PRIORITY;
+							break;
+							
+						default:
+							System.out.println("User specified NORMAL thread priority!");
+							priority = Thread.NORM_PRIORITY;
+							break;
+					}
+				}
+				catch(Exception e)
+				{
+					System.out.println("Exception while parsing priority as integer.");
+					e.printStackTrace();
+				}
+			}
 		}
+		
+		/* Start server and wait for connections. */
 		
 		try
 		{
 			server = EchoServer.getInstance();
 			server.initialize();
+			if(doThread)
+			{
+				System.out.println("User specified Thread class.");
+			}
+			else
+			{
+				System.out.println("User specified Runnable interface.");
+			}
 			System.out.println("Server up and running on port " + SERVER_PORT + "...");
 			
 			while(true)
@@ -83,6 +129,7 @@ public class EchoServer
 				{
 					clientThread = new Thread(new EchoServerRunnable(clientSocket));
 				}
+				clientThread.setPriority(priority);
 				clientThread.start();
 			}
 		}
