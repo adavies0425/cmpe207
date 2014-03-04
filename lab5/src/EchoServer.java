@@ -60,7 +60,6 @@ public class EchoServer
 	{
 		EchoServer server = null;
 		boolean doThread = true;
-		
 		if(args != null && args.length >= 1)
 		{
 			doThread = !(args[0].equalsIgnoreCase("runnable"));
@@ -84,7 +83,7 @@ public class EchoServer
 				{
 					clientThread = new Thread(new EchoServerRunnable(clientSocket));
 				}
-				clientThread.run();
+				clientThread.start();
 			}
 		}
 		catch(Exception e)
