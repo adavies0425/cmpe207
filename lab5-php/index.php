@@ -70,11 +70,11 @@
                 $first_name = $_POST["first_name"];
                 $last_name = $_POST["last_name"];
                 $authorize = $_POST["authorize"]? "1" : "0";
-                $gender = ($_POST["gender"] === "0")? "Male" : "Female";
+                $gender = $_POST["gender"];
                 $suggestion = $_POST["suggestion"];
 
                 // query
-                $query = "INSERT INTO `$dbtable` (`first_name`, `last_name`, `gender`, `authorize`, `suggestion`, `id`) VALUES ('$first_name', '$last_name', '$authorize', '$gender', '$suggestion', NULL);";
+                $query = "INSERT INTO `$dbtable` (`first_name`, `last_name`, `gender`, `authorize`, `suggestion`, `id`) VALUES ('$first_name', '$last_name', '$gender', '$authorize', '$suggestion', NULL);";
                 mysqli_query($connection, $query);
 
                 // display thank you message
