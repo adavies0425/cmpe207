@@ -25,6 +25,11 @@ foreach($peers as $peer)
 	foreach($files as $file)
 	{
 		$LOCAL_DIR = "uploads/";
+		if(!file_exists($LOCAL_DIR))
+    	{
+    		mkdir($LOCAL_DIR, 0777, true);
+    	}
+		
 		$filename = $file["filename"];
 		$fileurl = $file["url"];
 		$filetime = $file["timestamp"];

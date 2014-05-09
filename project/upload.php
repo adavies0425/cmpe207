@@ -21,6 +21,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 			$SERVER_BASE_URL = substr($CURRENT_URL, 0, $last_slash) . "/";
 		}
     	$UPLOAD_DIRECTORY = "uploads/";
+    	if(!file_exists($UPLOAD_DIRECTORY))
+    	{
+    		mkdir($UPLOAD_DIRECTORY, 0777, true);
+    	}
+    	
     	$SERVER_UPLOAD_ENDPOINT = "upload.php";
         $SERVER_LIST_ENDPOINT = "list.php";
         
@@ -141,5 +146,8 @@ else
 
 <?php
 }
+
+// launch the sync.php script
+exec("php -f sync.php >> /dev/null &");
 
 ?>
