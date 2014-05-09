@@ -1,0 +1,10 @@
+[
+	{
+		"list": "http://www.hassanpur.com/cmpe207/list.php",
+		"upload": "http://www.hassanpur.com/cmpe207/upload.php"
+	},
+	{
+		"list": "http://www.neatwurk.com/project/list.php",
+		"upload": "http://www.neatwurk.com/project/upload.php"
+	}
+]
